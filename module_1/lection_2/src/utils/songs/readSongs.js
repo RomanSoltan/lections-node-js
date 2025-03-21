@@ -1,11 +1,17 @@
-import fs from 'node:fs';
-console.log(fs);
+import fs from 'node:fs/promises';
+import { SONG_DB_PATH } from '../../constants/songs.js';
 
 export const readSongs = async () => {
-  fs.readFile('../../db/db-songs.json', (error, data) => {
-    console.log(error);
-    console.log(data);
-  });
+  // const buffer = await fs.readFile(SONG_DB_PATH);
+  // const text = buffer.toString();
+  // console.log(buffer);
+  // console.log(text);
+  // -------------------
+  const data = await fs.readFile(SONG_DB_PATH, 'utf-8');
+  // console.log(data);
+  // console.log(typeof data); // string
+
+  return JSON.parse(data);
 };
 
 readSongs();

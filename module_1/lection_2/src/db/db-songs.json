@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "id": "6cfb4f07-712c-414a-9df2-4a74d222982c",
+    "album": "Cozy Tapes Vol. 2: Too Cozy",
+    "artist": "TWICE",
+    "genre": "Alt-Rock",
+    "songName": "In the Mood"
+  },
+  {
+    "id": "705d19fd-20bc-4870-a54b-6e01113b81c7",
+    "album": "Reggatta De Blanc",
+    "artist": "The Pet Shop Boys",
+    "genre": "Industrial",
+    "songName": "Maneater"
+  },
+  {
+    "id": "48c48f67-7e4f-405a-927c-c2ed04a639ee",
+    "album": "Meduza",
+    "artist": "Deee-Lite",
+    "genre": "Roots Rock",
+    "songName": "Irreplaceable"
+  },
+  {
+    "id": "f1145803-ae72-4aaa-a411-31f2d03d6e0a",
+    "album": "Schwarzes Herz",
+    "artist": "The Doors",
+    "genre": "Mariachi",
+    "songName": "Hips don't lie"
+  },
+  {
+    "id": "ba1284f4-b979-47c4-9602-5336a79acf34",
+    "album": "El Amor En Los Tiempos Del Perreo",
+    "artist": "DJ Khaled",
+    "genre": "Worldbeat",
+    "songName": "Look Away"
+  },
+  {
+    "id": "ecb4924d-d51f-4114-9553-8008ac799c9d",
+    "album": "JackBoys",
+    "artist": "JAY-Z",
+    "genre": "Southern Gospel",
+    "songName": "Earth Angel"
+  },
+  {
+    "id": "ecda41d9-b70e-408f-b728-eb54a3205057",
+    "album": "R&G (Rhythm & Gangsta): The Masterpiece",
+    "artist": "Lil' Wayne",
+    "genre": "New Wave",
+    "songName": "Monday Monday"
+  },
+  {
+    "id": "32503a94-951b-436c-9ae7-cf9a7f6db349",
+    "album": "Combat Rock",
+    "artist": "Bazzi",
+    "genre": "Barbershop",
+    "songName": "Take The 'A' Train"
+  },
+  {
+    "id": "63f5822c-44ad-4565-bcd3-f0b78ea3cf65",
+    "album": "Todos Os Cantos, Vol. 1 (Ao Vivo)",
+    "artist": "Stevie B",
+    "genre": "Mawwal",
+    "songName": "Oh Happy Day"
+  },
+  {
+    "id": "c6bc9e68-5901-4d3b-84be-18a8ed9fcf0a",
+    "album": "Man Of The Woods",
+    "artist": "Spencer Davis Group",
+    "genre": "Britpop",
+    "songName": "All Night Long (All Night)"
+  }
+]
