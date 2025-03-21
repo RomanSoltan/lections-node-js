@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "generate": "node src/scripts/songs/generateSongs.js",
-    "get-all": "node src/scripts/getAllContacts",
+    "get-all": "node src/scripts/songs/getAllSongs.js",
     "add-one": "node src/scripts/addOneContact.js",
     "count": "node src/scripts/countContacts.js",
     "remove-last": "node src/scripts/removeLastContact.js",
