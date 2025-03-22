@@ -68,5 +68,19 @@
     "artist": "Spencer Davis Group",
     "genre": "Britpop",
     "songName": "All Night Long (All Night)"
+  },
+  {
+    "id": "88e71b5c-494c-42e1-ad6a-cf3760d7ab19",
+    "album": "Thank Me Later",
+    "artist": "Pearl Jam",
+    "genre": "Latin",
+    "songName": "Soul Man"
+  },
+  {
+    "id": "3f6f7caa-ed2f-49b9-87a5-eddc947fddb2",
+    "album": "Origins",
+    "artist": "Blake Shelton",
+    "genre": "J-Pop",
+    "songName": "Don't Let the Stars Get in Your Eyes"
   }
 ]

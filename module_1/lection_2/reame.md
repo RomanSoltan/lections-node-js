@@ -22,3 +22,4 @@
     до файлу, а також перетворити масив обєктів у рядок, за допомогою JSON.stringify(updateSongs)
 13. імпортуємо writeSongs у файлі generateSongs.js
 14. створити файл getAllSongs.js, де прописати функцію getAllSongs, яка викликає readSongs()
+15. створити файл addOneSong.js у scripts
