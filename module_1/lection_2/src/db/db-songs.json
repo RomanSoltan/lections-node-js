@@ -1,30 +1,37 @@
 [
   {
-    "id": "1c9747aa-e8a6-4268-b413-13a3b8559725",
-    "album": "Donda",
-    "artist": "Los Tigres Del Norte",
-    "genre": "J-Rock",
-    "songName": "You're Beautiful"
+    "id": "3a8cb696-d4c5-428f-812c-9e7cca3058d0",
+    "album": "Ultra 2021",
+    "artist": "Madison Beer",
+    "genre": "Mariachi",
+    "songName": "Something"
   },
   {
-    "id": "0286b916-f92c-477e-adb8-5473b7c9443d",
-    "album": "Summer,",
-    "artist": "The Partridge Family",
-    "genre": "Rockabilly",
-    "songName": "Louie Louie"
+    "id": "045b4b69-2b50-443a-94b5-8296688b83e3",
+    "album": "Dreaming Out Loud",
+    "artist": "Nicky Jam",
+    "genre": "Breakbeat",
+    "songName": "A Boy Named Sue"
   },
   {
-    "id": "763c3f88-4eb9-4f51-bd41-fcb51e10cb7a",
-    "album": "Dream Your Life Away",
-    "artist": "Sabrina Carpenter",
-    "genre": "Bossa Nova",
-    "songName": "Down"
+    "id": "f4cb4789-b919-4084-b4c9-71cd61f1f546",
+    "album": "Vibes",
+    "artist": "DMX",
+    "genre": "Space Rock",
+    "songName": "What's Love Got to Do With It?"
   },
   {
-    "id": "c667d602-5f0e-4ec8-8739-a1f8d612be74",
-    "album": "Total Xanarchy",
-    "artist": "Trippie Redd",
-    "genre": "Ethio-jazz",
-    "songName": "One of These Nights"
+    "id": "c1214106-beff-4118-ae43-09304498ca78",
+    "album": "The Perfect Luv Tape",
+    "artist": "The Mamas & The Papas",
+    "genre": "Thanksgiving",
+    "songName": "Call Me"
+  },
+  {
+    "id": "41ecde4b-596e-4edd-a8a3-56474c082d7a",
+    "album": "Ronan",
+    "artist": "BONES",
+    "genre": "Noise",
+    "songName": "How to Save a Life"
   }
 ]

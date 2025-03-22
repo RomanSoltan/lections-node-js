@@ -13,5 +13,3 @@ export const readSongs = async () => {
 
   return JSON.parse(data);
 };
-
-readSongs();

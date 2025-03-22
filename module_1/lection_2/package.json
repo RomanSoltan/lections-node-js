@@ -10,7 +10,7 @@
     "add-one": "node src/scripts/songs/addOneSong.js",
     "count": "node src/scripts/songs/countSongs.js",
     "remove-last": "node src/scripts/songs/removeLastSong.js",
-    "remove-all": "node src/scripts/removeAllContacts.js"
+    "remove-all": "node src/scripts/songs/removeAllSongs.js"
   },
   "keywords": [],
   "author": "",
