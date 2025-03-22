@@ -19,7 +19,11 @@
     записаний абсолютний шлях, і використаємо проміси замість callback у функції
 11. повернемо масив обєктів з функції readSongs за допомогою JSON.parse(data);
 12. перезапишемо пісні у файлі writeSongs.js. Для перезапису потрібно знати шлях
-    до файлу, а також перетворити масив обєктів у рядок, за допомогою JSON.stringify(updateSongs)
+    до файлу, а також перетворити масив обєктів у рядок, за допомогою
+    JSON.stringify(updateSongs)
 13. імпортуємо writeSongs у файлі generateSongs.js
-14. створити файл getAllSongs.js, де прописати функцію getAllSongs, яка викликає readSongs()
+14. створити файл getAllSongs.js, де прописати функцію getAllSongs,
+    яка викликає readSongs()
 15. створити файл addOneSong.js у scripts
+16. створити файл countSongs.js у utils і там створимо функцію countSongs,
+    яка прочитає і поверне довжину масиву пісень

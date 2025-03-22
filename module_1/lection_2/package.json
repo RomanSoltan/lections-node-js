@@ -8,7 +8,7 @@
     "generate": "node src/scripts/songs/generateSongs.js",
     "get-all": "node src/scripts/songs/getAllSongs.js",
     "add-one": "node src/scripts/songs/addOneSong.js",
-    "count": "node src/scripts/countContacts.js",
+    "count": "node src/scripts/songs/countSongs.js",
     "remove-last": "node src/scripts/removeLastContact.js",
     "remove-all": "node src/scripts/removeAllContacts.js"
   },
