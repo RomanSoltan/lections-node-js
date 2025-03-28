@@ -60,6 +60,12 @@ app.get("/movies", (req, res) => {
   res.json(movies);
 });
 
+app.use((req, res) => {
+  res.status(404).json({
+    message: `${req.url} not found`,
+  });
+});
+
 app.listen(3000, () => console.log("server running on 3000 port"));
 
 // middleware - це проміжий обробник, коли певна задача вимагає кілька етапів обробки. Бувають глобальні і локальні middleware
