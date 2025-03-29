@@ -14,6 +14,8 @@ export const initMongoConnection = async () => {
     // потрібно передати назву бази, до якої потрібно підключитись
     // 3. якщо цього не зробити помилки не буде, просто mongoose сам
     // створить базу, яку назве test, і до неї підключиться
+
+    // підєднання до бази
     await mongoose.connect(
       `mongodb+srv://${user}:${password}@${url}/${database}?retryWrites=true&w=majority&appName=Cluster0`,
     );
