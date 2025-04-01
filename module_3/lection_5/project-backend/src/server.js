@@ -1,23 +1,20 @@
 import express from 'express';
 import cors from 'cors';
-import pino from 'pino-http';
+
 import { getMovies, getMovieById } from './services/movies.js';
 import { getEnvVar } from './utils/getEnvVar.js';
+import { logger } from './middlewares/logger.js';
+import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 export const startServer = () => {
   const app = express();
 
   app.use(cors());
   app.use(express.json());
-  // app.use(
-  //   pino({
-  //     transport: {
-  //       target: 'pino-pretty',
-  //     },
-  //   }),
-  // );
+  // app.use(logger);
 
-  app.get('/api/movies', async (req, res) => {
+  app.get('/movies', async (req, res) => {
     // робимо запит до колекції
     const data = await getMovies();
 
@@ -28,7 +25,7 @@ export const startServer = () => {
     });
   });
 
-  app.get('/api/movies/:id', async (req, res) => {
+  app.get('/movies/:id', async (req, res) => {
     // витягнемо id з req, де він зберігається
     const { id } = req.params;
     const data = await getMovieById(id);
@@ -47,19 +44,11 @@ export const startServer = () => {
     });
   });
 
-  // коли немає такої адреси
-  app.use((req, res) => {
-    res.status(404).json({
-      message: `${req.url} not foud`,
-    });
-  });
+  // middleware, коли немає такої адреси
+  app.use(notFoundHandler);
 
-  // для обробки помилок
-  app.use((err, req, res, next) => {
-    res.status(500).json({
-      message: err.message,
-    });
-  });
+  // middleware для обробки помилок
+  app.use(errorHandler);
 
   // проект буде запускатися на тому порті, який вільний
   // process.env - це налаштування серверу
