@@ -1,40 +1,31 @@
 import createHttpError from 'http-errors';
 import { getMovieById, getMovies } from '../services/movies.js';
 
-export const getMoviesController = async (req, res, next) => {
-  try {
-    // робимо запит до колекції
-    const data = await getMovies();
+export const getMoviesController = async (req, res) => {
+  // робимо запит до колекції
+  const data = await getMovies();
 
-    res.json({
-      status: 200,
-      message: 'Successfully find movies!',
-      data,
-    });
-  } catch (error) {
-    next(error);
-  }
+  res.json({
+    status: 200,
+    message: 'Successfully find movies!',
+    data,
+  });
 };
 
-export const getMovieByIdController = async (req, res, next) => {
-  try {
-    // витягнемо id з req, де він зберігається
-    const { id } = req.params;
-    const data = await getMovieById(id);
+export const getMovieByIdController = async (req, res) => {
+  // витягнемо id з req, де він зберігається
+  const { id } = req.params;
+  const data = await getMovieById(id);
 
-    if (!data) {
-      throw createHttpError(404, `Movie with id=${id} not found`);
-    }
-
-    res.json({
-      status: 200,
-      message: `Successfully find movie with id=${id}!`,
-      data,
-    });
-  } catch (error) {
-    // передається в обробник помилок з 4-ма параметрами errorHandler
-    next(error);
+  if (!data) {
+    throw createHttpError(404, `Movie with id=${id} not found`);
   }
+
+  res.json({
+    status: 200,
+    message: `Successfully find movie with id=${id}!`,
+    data,
+  });
 };
 
 // Замість того, щоб в кожному catch передавати відповідь з помилкою,
