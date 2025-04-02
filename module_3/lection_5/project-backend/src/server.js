@@ -15,7 +15,8 @@ export const startServer = () => {
   // app.use(logger);
 
   // застосуємо middleware moviesRouter до всіх запитів, які починаються з адреси '/movies'
-  // рядок читається так. Коли прийде будь-який запит, який починається зі /movies, шукай його обробник у обєкті moviesRouter
+  // рядок читається так. Коли прийде будь-який запит, який починається з /movies,
+  // шукай його обробник у обєкті moviesRouter
   app.use('/movies', moviesRouter);
 
   // middleware, коли немає такої адреси
