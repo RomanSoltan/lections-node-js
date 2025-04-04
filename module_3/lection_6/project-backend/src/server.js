@@ -11,6 +11,13 @@ export const startServer = () => {
   const app = express();
 
   app.use(cors());
+
+  // express.json() Перевіряє чи у запиті є заголовок Content-Type і чому він дорівнює.
+  // Якщо Content-Type: application/json, то ця мідлевара бере це тіло запиту,
+  // проускає це тіло через JSON.parse(), отримує масив або обєкт і записує в
+  // reqvest.body.
+  // Якщо з іншої причини у вас приходить тіло запиту у іншому форматі, то потрібно
+  // створити іншу мідлвару
   app.use(express.json());
   // app.use(logger);
 

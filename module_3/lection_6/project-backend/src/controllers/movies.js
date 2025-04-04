@@ -1,5 +1,11 @@
 import createHttpError from 'http-errors';
-import { getMovieById, getMovies } from '../services/movies.js';
+import {
+  addMovie,
+  deleteMovieById,
+  getMovieById,
+  getMovies,
+  updateMovie,
+} from '../services/movies.js';
 
 export const getMoviesController = async (req, res) => {
   // робимо запит до колекції
@@ -28,7 +34,54 @@ export const getMovieByIdController = async (req, res) => {
   });
 };
 
-// Замість того, щоб в кожному catch передавати відповідь з помилкою,
-// можна помилку передати в next() і тоді express буде шукати обробник
-// помилок, обробником помилок express вважає middleware, і якому є
-// 4 параметри, де викликає функцію, куди першим аргументом передає помилку
+export const addMovieController = async (req, res) => {
+  // console.log(req.body);
+  const data = await addMovie(req.body);
+
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully add movie',
+    data,
+  });
+};
+
+export const upsertMovieController = async (req, res) => {
+  const { id } = req.params;
+  // якщо не передамо { upsert: true } третім аргументом і передамо id,
+  // якого немає, то при запиті повернеться null
+  const { data, isNew } = await updateMovie(id, req.body, { upsert: true });
+  const status = isNew ? 201 : 200;
+
+  res.status(status).json({
+    status,
+    message: 'Successfully upsert movie',
+    data,
+  });
+};
+
+export const patchMovieController = async (req, res) => {
+  const { id } = req.params;
+  const result = await updateMovie(id, req.body);
+
+  if (!result) {
+    throw createHttpError(404, `Movie with id=${id} not found`);
+  }
+
+  res.json({
+    status: 200,
+    message: 'Successfully update movie',
+    data: result.data,
+  });
+};
+
+export const deleteMovieCotroller = async (req, res) => {
+  const { id } = req.params;
+
+  const data = await deleteMovieById(id);
+
+  if (!data) {
+    throw createHttpError(404, `Movie with id=${id} not found`);
+  }
+
+  res.status(204).send();
+};
