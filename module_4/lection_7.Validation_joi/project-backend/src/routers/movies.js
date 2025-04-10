@@ -20,7 +20,7 @@ moviesRouter.get('/:id', ctrlWrapper(getMovieByIdController));
 
 moviesRouter.post(
   '/',
-
+  validateBody(movieAddSchema),
   ctrlWrapper(addMovieController),
 );
 

@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { typeList } from '../../constants/movies.js';
-import { handlerSaveError } from './hooks.js';
+import { handlerSaveError, setUpdateSettings } from './hooks.js';
 
 // створимо Schema - описує обєкт як має виглядати в колекції movies
 // обмеженя на рівні запитів до бази
@@ -36,6 +36,12 @@ const movieSchema = new Schema(
 // Цей запис означає, якщо після додавання виникла помилка, то виконай
 // колбек функцію i додамо помилці статус
 movieSchema.post('save', handlerSaveError);
+
+// pre означає перед. Перед оновленням викличи колбек функцію
+movieSchema.pre('findOneAndUpdate', setUpdateSettings);
+
+// якщо під час оновлення сталася валідація, теж викличи цю функцію
+movieSchema.post('findOneAndUpdate', handlerSaveError);
 
 // створимо модель - це клас, який зєднаний з колекцією movies
 // якщо такої колекції не буде mongoose її створить
