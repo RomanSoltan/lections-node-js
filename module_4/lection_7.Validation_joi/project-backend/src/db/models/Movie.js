@@ -1,12 +1,15 @@
 import { Schema, model } from 'mongoose';
+import { typeList } from '../../constants/movies.js';
+import { handlerSaveError } from './hooks.js';
 
 // створимо Schema - описує обєкт як має виглядати в колекції movies
 // обмеженя на рівні запитів до бази
+// Schema перевіряє те, що ми зберігаємо в базу
 const movieSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, "Назва фільму обов'язкова"],
     },
     director: {
       type: String,
@@ -21,13 +24,18 @@ const movieSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ['film', 'serial'],
-      default: 'film',
+      enum: typeList,
+      default: typeList[0],
       required: true,
     },
   },
   { versionKey: false, timestamps: true },
 );
+
+// метод post() означає, що перевірка відбувається після запиту до бази
+// Цей запис означає, якщо після додавання виникла помилка, то виконай
+// колбек функцію i додамо помилці статус
+movieSchema.post('save', handlerSaveError);
 
 // створимо модель - це клас, який зєднаний з колекцією movies
 // якщо такої колекції не буде mongoose її створить
