@@ -1,5 +1,6 @@
 // services роблять логіку
 import MovieCollection from '../db/models/Movie.js';
+import { calcPaginationData } from '../utils/calcPaginationData.js';
 
 // створимо функції, які будуть робити запити до бази
 export const getMovies = async ({ page = 1, perPage = 10 }) => {
@@ -7,9 +8,17 @@ export const getMovies = async ({ page = 1, perPage = 10 }) => {
   // skip - це скільки пропустити обєктів спочатку колекції
   // limit - це скільки взяти
   const skip = (page - 1) * perPage;
-  const result = await MovieCollection.find().skip(skip).limit(perPage);
+  const items = await MovieCollection.find().skip(skip).limit(perPage);
+  // знайдемо загальну кількість фільмів
+  const totalItems = await MovieCollection.find().countDocuments();
 
-  return result;
+  const painationData = calcPaginationData({ page, perPage, totalItems });
+
+  return {
+    items,
+    totalItems,
+    ...painationData,
+  };
 };
 
 export const getMovieById = (id) => MovieCollection.findOne({ _id: id });
