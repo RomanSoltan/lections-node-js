@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { typeList } from '../constants/movies.js';
+import { minReleaseYear, typeList } from '../constants/movies.js';
 
 // створимо joi-схему, яка описує обєкт
 // Joi перевіряє, те що прийшло з фронта
@@ -11,6 +11,7 @@ export const movieAddSchema = Joi.object({
   director: Joi.string().required(),
   favorite: Joi.boolean(),
   type: Joi.string().valid(...typeList),
+  releaseYear: Joi.number().min(minReleaseYear).required(),
 });
 
 // схема для patch
@@ -19,6 +20,7 @@ export const movieUpdateSchema = Joi.object({
   director: Joi.string(),
   favorite: Joi.boolean(),
   type: Joi.string().valid(...typeList),
+  releaseYear: Joi.number().min(minReleaseYear),
 });
 
 // Є різниця між тим, що нам приходить і тим, що ми зберігаємо у базі данних.

@@ -2,3 +2,5 @@
 // тоді краще винести його окремо (напр в constants) і застосовувати
 
 export const typeList = ['film', 'serial', 'cartoon'];
+
+export const minReleaseYear = 1895;

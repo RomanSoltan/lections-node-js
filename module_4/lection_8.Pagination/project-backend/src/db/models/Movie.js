@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { typeList } from '../../constants/movies.js';
+import { minReleaseYear, typeList } from '../../constants/movies.js';
 import { handlerSaveError, setUpdateSettings } from './hooks.js';
 
 // створимо Schema - описує обєкт як має виглядати в колекції movies
@@ -26,6 +26,11 @@ const movieSchema = new Schema(
       type: String,
       enum: typeList,
       default: typeList[0],
+      required: true,
+    },
+    releaseYear: {
+      type: Number,
+      min: minReleaseYear,
       required: true,
     },
   },

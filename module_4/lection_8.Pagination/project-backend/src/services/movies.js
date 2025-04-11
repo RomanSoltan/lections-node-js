@@ -1,7 +1,16 @@
+// services роблять логіку
 import MovieCollection from '../db/models/Movie.js';
 
 // створимо функції, які будуть робити запити до бази
-export const getMovies = () => MovieCollection.find();
+export const getMovies = async ({ page = 1, perPage = 10 }) => {
+  // запросимо у бази значення
+  // skip - це скільки пропустити обєктів спочатку колекції
+  // limit - це скільки взяти
+  const skip = (page - 1) * perPage;
+  const result = await MovieCollection.find().skip(skip).limit(perPage);
+
+  return result;
+};
 
 export const getMovieById = (id) => MovieCollection.findOne({ _id: id });
 

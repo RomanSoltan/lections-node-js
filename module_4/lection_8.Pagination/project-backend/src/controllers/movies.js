@@ -1,4 +1,5 @@
 import createHttpError from 'http-errors';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import {
   addMovie,
   deleteMovieById,
@@ -8,8 +9,11 @@ import {
 } from '../services/movies.js';
 
 export const getMoviesController = async (req, res) => {
+  // отримаємо значення queryParams, те що йде після ? у запиті
+  const paginationParams = parsePaginationParams(req.query);
+
   // робимо запит до колекції
-  const data = await getMovies();
+  const data = await getMovies({ ...paginationParams });
 
   res.json({
     status: 200,
