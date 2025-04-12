@@ -9,17 +9,33 @@ export const getMovies = async ({
   perPage = 10,
   sortBy = '_id',
   sortOrder = sortList[0],
+  filters = {},
 }) => {
   // запросимо у бази значення
   // skip - це скільки пропустити обєктів спочатку колекції
   // limit - це скільки взяти
   const skip = (page - 1) * perPage;
-  const items = await MovieCollection.find()
+
+  const movieQuery = MovieCollection.find();
+  if (filters.type) {
+    movieQuery.where('type').equals(filters.type);
+  }
+  if (filters.minReleaseYear) {
+    movieQuery.where('releaseYear').gte(filters.minReleaseYear);
+  }
+  if (filters.maxReleaseYear) {
+    movieQuery.where('releaseYear').lte(filters.maxReleaseYear);
+  }
+
+  const items = await movieQuery
     .skip(skip)
     .limit(perPage)
     .sort({ [sortBy]: sortOrder });
+
   // знайдемо загальну кількість фільмів
-  const totalItems = await MovieCollection.find().countDocuments();
+  const totalItems = await MovieCollection.find()
+    .merge(movieQuery)
+    .countDocuments();
 
   // порахувати додаткові налаштування
   const painationData = calcPaginationData({ page, perPage, totalItems });
