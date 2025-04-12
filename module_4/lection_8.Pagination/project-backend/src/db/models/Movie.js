@@ -48,6 +48,15 @@ movieSchema.pre('findOneAndUpdate', setUpdateSettings);
 // якщо під час оновлення сталася валідація, теж викличи цю функцію
 movieSchema.post('findOneAndUpdate', handlerSaveError);
 
+// створимо масив полів, який можна використати при сортуванні
+export const movieSortFields = [
+  'title',
+  'director',
+  'favorite',
+  'type',
+  'releaseYear',
+];
+
 // створимо модель - це клас, який зєднаний з колекцією movies
 // якщо такої колекції не буде mongoose її створить
 // 1-й арумент - назва колекції до якої потрібно підєднатися

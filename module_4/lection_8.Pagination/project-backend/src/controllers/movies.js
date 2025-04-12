@@ -1,5 +1,7 @@
 import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
+import { movieSortFields } from '../db/models/Movie.js';
 import {
   addMovie,
   deleteMovieById,
@@ -12,8 +14,11 @@ export const getMoviesController = async (req, res) => {
   // отримаємо значення queryParams, те що йде після ? у запиті
   const paginationParams = parsePaginationParams(req.query);
 
+  // сортування
+  const sortParams = parseSortParams(req.query, movieSortFields);
+
   // робимо запит до колекції
-  const data = await getMovies({ ...paginationParams });
+  const data = await getMovies({ ...paginationParams, ...sortParams });
 
   res.json({
     status: 200,
