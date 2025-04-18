@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 
-import { logger } from './middlewares/logger.js';
+// import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import authRouter from './routers/auth.js';
 import moviesRouter from './routers/movies.js';
 import { getEnvVar } from './utils/getEnvVar.js';
 
@@ -21,6 +22,9 @@ export const startServer = () => {
   app.use(express.json());
   // app.use(logger);
 
+  // Коли прийде будь-який запит, який починається з /auth,
+  // шукай його обробник у обєкті authRouter
+  app.use('/auth', authRouter);
   // застосуємо middleware moviesRouter до всіх запитів, які починаються з адреси '/movies'
   // рядок читається так. Коли прийде будь-який запит, який починається з /movies,
   // шукай його обробник у обєкті moviesRouter
