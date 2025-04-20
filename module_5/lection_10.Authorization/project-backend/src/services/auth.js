@@ -9,6 +9,22 @@ import {
   refreshTokenLifeTime,
 } from '../constants/auth.js';
 
+// створимо нову сесію
+const createSession = () => {
+  // згенеруємо токени і час їх життя
+  const accessToken = randomBytes(30).toString('base64');
+  const refreshToken = randomBytes(30).toString('base64');
+  const accessTokenValidUntil = Date.now() + accessTokenLifeTime;
+  const refreshTokenValidUntil = Date.now() + refreshTokenLifeTime;
+
+  return {
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil,
+    refreshTokenValidUntil,
+  };
+};
+
 // передаємо умову пошуку сесії і поверне або сесію, або null
 export const findSession = (query) => SessionCollection.findOne(query);
 
@@ -64,15 +80,40 @@ export const loginUser = async (payload) => {
   await SessionCollection.findOneAndDelete({ userId: user._id });
 
   // згенеруємо токени
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
+  const session = createSession();
 
   // створюємо нову сесію
   return SessionCollection.create({
     userId: user._id,
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: Date.now() + accessTokenLifeTime,
-    refreshTokenValidUntil: Date.now() + refreshTokenLifeTime,
+    ...session,
+  });
+};
+
+export const refreshUser = async ({ refreshToken, sessionId }) => {
+  // потрібно перевірити чи є така сесія з таким токеном і id
+  const session = await findSession({ refreshToken, _id: sessionId });
+  if (!session) {
+    throw createHttpError(401, 'Session not found (refresh)');
+  }
+
+  // console.log(typeof session.refreshTokenValidUntil); // object
+
+  // час життя refresh токена вичерпаний
+  if (session.refreshTokenValidUntil < Date.now()) {
+    // видаляємо стару сесію, якщо токен вмер
+    await SessionCollection.findOneAndDelete({ _id: session._id });
+    throw createHttpError(401, 'Session token expired');
+  }
+
+  // видаляємо стару сесію
+  await SessionCollection.findOneAndDelete({ _id: session._id });
+
+  //згенеруємо нову сесію і токени
+  const newSession = createSession();
+
+  // повертаємо на фронтенд нову сесію
+  return SessionCollection.create({
+    userId: session.userId,
+    ...newSession,
   });
 };

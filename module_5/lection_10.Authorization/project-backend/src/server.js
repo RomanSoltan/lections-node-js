@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 // import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
@@ -12,6 +13,7 @@ export const startServer = () => {
   const app = express();
 
   app.use(cors());
+  app.use(cookieParser());
 
   // express.json() Перевіряє чи у запиті є заголовок Content-Type і чому він дорівнює.
   // Якщо Content-Type: application/json, то ця мідлевара бере це тіло запиту,

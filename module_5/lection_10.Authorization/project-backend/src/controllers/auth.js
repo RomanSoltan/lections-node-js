@@ -1,4 +1,17 @@
-import { registerUser, loginUser } from '../services/auth.js';
+import { registerUser, loginUser, refreshUser } from '../services/auth.js';
+
+// функція для збереження куків
+const setupSession = (res, session) => {
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
+
+  res.cookie('sessionId', session._id, {
+    httpOnly: true,
+    expires: session.refreshTokenValidUntil,
+  });
+};
 
 export const registerController = async (req, res) => {
   // в сервіс передаємо обєкт
@@ -17,19 +30,28 @@ export const loginController = async (req, res) => {
   // передамо в сервіс req.body
   const session = await loginUser(req.body);
 
-  res.cookie('refreshToken', session.refreshToken, {
-    httpOnly: true,
-    expires: session.refreshTokenValidUntil,
-  });
-
-  res.cookie('sessionId', session._id, {
-    httpOnly: true,
-    expires: session.refreshTokenValidUntil,
-  });
+  setupSession(res, session);
 
   res.json({
     status: 200,
     message: 'Login successfuly',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};
+
+export const refreshController = async (req, res) => {
+  // зберігається refreshToken
+  // console.log(req.cookies);
+
+  const session = await refreshUser(req.cookies);
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'Session successfully refresh',
     data: {
       accessToken: session.accessToken,
     },
