@@ -37,5 +37,9 @@ export const authenticate = async (req, res, next) => {
     return next(createHttpError(401, 'User not found(authenticate)'));
   }
 
+  // запишемо у req.user інформацію про користувача, який робить запит,
+  // для того щоб отримати його і використати у будь-якому місці
+  req.user = user;
+
   next();
 };

@@ -17,6 +17,11 @@ export const getMovies = async ({
   const skip = (page - 1) * perPage;
 
   const movieQuery = MovieCollection.find();
+  // якщо є userId
+  if (filters.userId) {
+    // знайди всі фільми з таким userId
+    movieQuery.where('userId').equals(filters.userId);
+  }
   if (filters.type) {
     movieQuery.where('type').equals(filters.type);
   }

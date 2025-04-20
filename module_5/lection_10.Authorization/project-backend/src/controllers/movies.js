@@ -15,12 +15,13 @@ export const getMoviesController = async (req, res) => {
   // отримаємо значення queryParams, те що йде після ? у запиті
   // пагінація
   const paginationParams = parsePaginationParams(req.query);
-
   // сортування
   const sortParams = parseSortParams(req.query, movieSortFields);
-
   // фільтрація
   const filters = parseMovieFilterParams(req.query);
+
+  // додамо до фільтрів id користувача, який робить запит
+  filters.userId = req.user._id;
 
   // робимо запит до колекції
   const data = await getMovies({
@@ -54,7 +55,10 @@ export const getMovieByIdController = async (req, res) => {
 
 export const addMovieController = async (req, res) => {
   // console.log(req.body);
-  const data = await addMovie(req.body);
+  // отримаємо id користувача з req, який робить запит
+  const { _id: userId } = req.user;
+
+  const data = await addMovie({ ...req.body, userId });
 
   res.status(201).json({
     status: 201,
