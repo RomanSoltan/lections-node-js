@@ -1,4 +1,9 @@
-import { registerUser, loginUser, refreshUser } from '../services/auth.js';
+import {
+  registerUser,
+  loginUser,
+  refreshUser,
+  logoutUser,
+} from '../services/auth.js';
 
 // функція для збереження куків
 const setupSession = (res, session) => {
@@ -56,4 +61,17 @@ export const refreshController = async (req, res) => {
       accessToken: session.accessToken,
     },
   });
+};
+
+export const logoutController = async (req, res) => {
+  if (req.cookies.sessionId) {
+    // запит на логаут
+    await logoutUser(req.cookies.sessionId);
+  }
+
+  // прибрали куки
+  res.clearCookie('sessionId');
+  res.clearCookie('refreshToken');
+
+  res.status(204).send();
 };

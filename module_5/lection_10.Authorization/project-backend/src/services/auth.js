@@ -117,3 +117,7 @@ export const refreshUser = async ({ refreshToken, sessionId }) => {
     ...newSession,
   });
 };
+
+export const logoutUser = (sessionId) =>
+  // видалення сесії
+  SessionCollection.deleteOne({ _id: sessionId });
