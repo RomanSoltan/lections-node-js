@@ -9,13 +9,20 @@ import {
   refreshTokenLifeTime,
 } from '../constants/auth.js';
 
+// передаємо умову пошуку сесії і поверне або сесію, або null
+export const findSession = (query) => SessionCollection.findOne(query);
+
+// знайдемо юзера
+export const findUser = (query) => UserCollection.findOne(query);
+
 export const registerUser = async (payload) => {
   const { email, password } = payload;
-  // Шукаємо користувача в базі за email, якщо є, то
-  // викидаємо помилку зі статусом і текстом помилки
+  // Шукаємо користувача в базі за email
   const user = await UserCollection.findOne({ email }); // поверне null або object
   // console.log(Boolean([])); // true
 
+  // якщо є користувач, то
+  // викидаємо помилку зі статусом і текстом помилки
   if (user) {
     throw createHttpError(409, 'Email already in use');
   }
