@@ -2,13 +2,18 @@ import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
 // для генерації токенів
 import { randomBytes } from 'node:crypto';
+import path from 'node:path';
+import fs from 'node:fs/promises';
+import Handlebars from 'handlebars';
 import UserCollection from '../db/models/User.js';
 import SessionCollection from '../db/models/Session.js';
 import { sendEmail } from '../utils/sendEmail.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
 import {
   accessTokenLifeTime,
   refreshTokenLifeTime,
 } from '../constants/auth.js';
+import { TEMPLATES_DIR } from '../constants/index.js';
 
 // створимо нову сесію
 const createSession = () => {
@@ -32,6 +37,11 @@ export const findSession = (query) => SessionCollection.findOne(query);
 // знайдемо юзера
 export const findUser = (query) => UserCollection.findOne(query);
 
+// шлях до шаблону
+const verifyEmailPath = path.join(TEMPLATES_DIR, 'verify-email.html');
+// отримаємо адресу бекенду
+const appDomain = getEnvVar('APP_DOMAIN');
+
 export const registerUser = async (payload) => {
   const { email, password } = payload;
   // Шукаємо користувача в базі за email
@@ -54,10 +64,20 @@ export const registerUser = async (payload) => {
     password: hashPassword,
   });
 
+  // читаємо текст шаблону
+  const templateSource = await fs.readFile(verifyEmailPath, 'utf-8');
+  // з тексту зробимо handlebar шаблон
+  const template = Handlebars.compile(templateSource);
+  // викликаємо шаблон як функцію
+  const html = template({
+    // має бути адреса задеплоєного бекенду
+    verifyLink: `${appDomain}/auth/verify?token=`,
+  });
+
   const verifyEmail = {
     to: email,
     subject: 'Verify email',
-    html: `<a href="">Click verify email</a>`,
+    html,
   };
   // відправимо email
   await sendEmail(verifyEmail);

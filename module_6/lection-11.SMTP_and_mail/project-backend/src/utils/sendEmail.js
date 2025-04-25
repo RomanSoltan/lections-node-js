@@ -1,7 +1,9 @@
 import nodemailer from 'nodemailer';
 import 'dotenv/config';
+import { getEnvVar } from './getEnvVar.js';
 
-const { UKR_NET_EMAIL, UKR_NET_PASSWORD } = process.env;
+const user = getEnvVar('UKR_NET_EMAIL');
+const pass = getEnvVar('UKR_NET_PASSWORD');
 
 const nodemailerConfig = {
   // адреса поштового серверу, до якого підключаємось
@@ -10,8 +12,8 @@ const nodemailerConfig = {
   secure: true,
   //   email до якого підключаємось
   auth: {
-    user: UKR_NET_EMAIL,
-    pass: UKR_NET_PASSWORD,
+    user,
+    pass,
   },
 };
 
@@ -19,6 +21,6 @@ const nodemailerConfig = {
 const transport = nodemailer.createTransport(nodemailerConfig);
 
 export const sendEmail = (data) => {
-  const email = { ...data, from: UKR_NET_EMAIL };
+  const email = { ...data, from: user };
   return transport.sendMail(email);
 };
