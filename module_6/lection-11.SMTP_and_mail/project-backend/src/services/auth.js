@@ -4,6 +4,7 @@ import createHttpError from 'http-errors';
 import { randomBytes } from 'node:crypto';
 import UserCollection from '../db/models/User.js';
 import SessionCollection from '../db/models/Session.js';
+import { sendEmail } from '../utils/sendEmail.js';
 import {
   accessTokenLifeTime,
   refreshTokenLifeTime,
@@ -48,10 +49,20 @@ export const registerUser = async (payload) => {
 
   // Створюємо нового користувача і зберігаємо його
   // у базі разом із захешованим паролем
-  return await UserCollection.create({
+  const newUser = await UserCollection.create({
     ...payload,
     password: hashPassword,
   });
+
+  const verifyEmail = {
+    to: email,
+    subject: 'Verify email',
+    html: `<a href="">Click verify email</a>`,
+  };
+  // відправимо email
+  await sendEmail(verifyEmail);
+
+  return newUser;
 };
 
 // напишемо логіку login
