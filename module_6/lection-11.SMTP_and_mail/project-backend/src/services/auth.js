@@ -66,6 +66,11 @@ export const loginUser = async (payload) => {
     throw createHttpError(401, 'Email or password invalid');
   }
 
+  // чи підтверджений email
+  if (!user.verify) {
+    throw createHttpError(401, 'Email not verified');
+  }
+
   // перевіряємо паролі
   const passwordCompare = await bcrypt.compare(password, user.password);
 
