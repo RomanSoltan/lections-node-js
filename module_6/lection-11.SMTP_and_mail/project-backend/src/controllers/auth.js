@@ -1,5 +1,6 @@
 import {
   registerUser,
+  verifyUser,
   loginUser,
   refreshUser,
   logoutUser,
@@ -27,6 +28,15 @@ export const registerController = async (req, res) => {
   res.status(201).json({
     status: 201,
     message: 'Successully registrer user!',
+  });
+};
+
+export const verifyController = async (req, res) => {
+  // беремо jwt token із адреси і передаємо в сервіс
+  await verifyUser(req.query.token);
+
+  res.json({
+    message: 'Email verified!',
   });
 };
 

@@ -4,6 +4,7 @@ import { validateBody } from '../utils/validateBody.js';
 import { authLoginSchema, authRegisterSchema } from '../validation/auth.js';
 import {
   registerController,
+  verifyController,
   loginController,
   refreshController,
   logoutController,
@@ -16,6 +17,8 @@ authRouter.post(
   validateBody(authRegisterSchema),
   ctrlWrapper(registerController),
 );
+
+authRouter.get('/verify', ctrlWrapper(verifyController));
 
 authRouter.post(
   '/login',

@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 import 'dotenv/config';
 import { getEnvVar } from './getEnvVar.js';
 
+// налаштування підключення
 const user = getEnvVar('UKR_NET_EMAIL');
 const pass = getEnvVar('UKR_NET_PASSWORD');
 

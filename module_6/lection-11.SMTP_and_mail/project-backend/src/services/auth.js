@@ -5,6 +5,7 @@ import { randomBytes } from 'node:crypto';
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import Handlebars from 'handlebars';
+import jwt from 'jsonwebtoken';
 import UserCollection from '../db/models/User.js';
 import SessionCollection from '../db/models/Session.js';
 import { sendEmail } from '../utils/sendEmail.js';
@@ -41,6 +42,8 @@ export const findUser = (query) => UserCollection.findOne(query);
 const verifyEmailPath = path.join(TEMPLATES_DIR, 'verify-email.html');
 // отримаємо адресу бекенду
 const appDomain = getEnvVar('APP_DOMAIN');
+// отримаємо секретний ключ
+const jwtSecret = getEnvVar('JWT_SECRET');
 
 export const registerUser = async (payload) => {
   const { email, password } = payload;
@@ -64,6 +67,11 @@ export const registerUser = async (payload) => {
     password: hashPassword,
   });
 
+  // створюємо токен
+  const token = jwt.sign({ email }, jwtSecret, {
+    expiresIn: '24h',
+  });
+
   // читаємо текст шаблону
   const templateSource = await fs.readFile(verifyEmailPath, 'utf-8');
   // з тексту зробимо handlebar шаблон
@@ -71,7 +79,7 @@ export const registerUser = async (payload) => {
   // викликаємо шаблон як функцію
   const html = template({
     // має бути адреса задеплоєного бекенду
-    verifyLink: `${appDomain}/auth/verify?token=`,
+    verifyLink: `${appDomain}/auth/verify?token=${token}`,
   });
 
   const verifyEmail = {
@@ -83,6 +91,18 @@ export const registerUser = async (payload) => {
   await sendEmail(verifyEmail);
 
   return newUser;
+};
+
+// сервіс верифікації, де перевірятимемо токен
+export const verifyUser = (token) => {
+  try {
+    // знаходимо email по валідному токену
+    const { email } = jwt.verify(token, jwtSecret);
+    // змінюємо у користувача  verify на true
+    return UserCollection.findOneAndUpdate({ email }, { verify: true });
+  } catch (error) {
+    throw createHttpError(401, error.message);
+  }
 };
 
 // напишемо логіку login
