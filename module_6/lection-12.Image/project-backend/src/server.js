@@ -8,6 +8,7 @@ import { errorHandler } from './middlewares/errorHandler.js';
 import authRouter from './routers/auth.js';
 import moviesRouter from './routers/movies.js';
 import { getEnvVar } from './utils/getEnvVar.js';
+import { UPLOAD_FILE_DIR } from './constants/index.js';
 
 export const startServer = () => {
   const app = express();
@@ -23,6 +24,8 @@ export const startServer = () => {
   // створити іншу мідлвару
   app.use(express.json());
   // app.use(logger);
+
+  app.use('/upload', express.static(UPLOAD_FILE_DIR));
 
   // Коли прийде будь-який запит, який починається з /auth,
   // шукай його обробник у обєкті authRouter

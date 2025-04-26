@@ -38,6 +38,11 @@ const movieSchema = new Schema(
       ref: 'user',
       required: true,
     },
+    posterUrl: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
   { versionKey: false, timestamps: true },
 );
