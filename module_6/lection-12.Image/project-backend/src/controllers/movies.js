@@ -10,7 +10,9 @@ import {
   getMovies,
   updateMovie,
 } from '../services/movies.js';
-import { saveFileToLocal } from '../utils/saveFileToLocal.js';
+import { saveFile } from '../utils/saveFile.js';
+// import { saveFileToLocal } from '../utils/saveFileToLocal.js';
+// import { saveFileToCloudnary } from '../utils/saveFileToCloudinary.js';
 
 export const getMoviesController = async (req, res) => {
   // отримаємо значення queryParams, те що йде після ? у запиті
@@ -85,8 +87,12 @@ export const upsertMovieController = async (req, res) => {
 export const patchMovieController = async (req, res) => {
   const { id } = req.params;
   let posterUrl = null;
+
   if (req.file) {
-    posterUrl = await saveFileToLocal(req.file);
+    posterUrl = await saveFile(req.file);
+
+    // posterUrl = await saveFileToLocal(req.file);
+    // posterUrl = await saveFileToCloudnary(req.file);
   }
 
   const result = await updateMovie(id, { ...req.body, posterUrl });
