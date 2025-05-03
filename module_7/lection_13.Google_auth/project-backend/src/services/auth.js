@@ -15,7 +15,10 @@ import {
   refreshTokenLifeTime,
 } from '../constants/auth.js';
 import { TEMPLATES_DIR } from '../constants/index.js';
-import { generateGoogleOAuthLink } from '../utils/googleOAuthClient.js';
+import {
+  generateGoogleOAuthLink,
+  verifyCode,
+} from '../utils/googleOAuthClient.js';
 
 // створимо нову сесію
 const createSession = () => {
@@ -181,4 +184,30 @@ export const logoutUser = (sessionId) =>
 
 export const getGoogleLink = () => {
   return generateGoogleOAuthLink();
+};
+
+export const loginOrSignupWithGoogle = async (code) => {
+  const tokenPayload = await verifyCode(code);
+
+  const { email } = tokenPayload;
+
+  let user = await UserCollection.findOne({ email });
+
+  if (!user) {
+    user = await UserCollection.create({
+      username: tokenPayload.name,
+      email,
+      password: randomBytes(30).toString('base64'),
+      verify: tokenPayload.email_verified,
+    });
+  }
+
+  await SessionCollection.findOneAndDelete({ userId: user._id });
+
+  const newSession = createSession();
+
+  return SessionCollection.create({
+    userId: user._id,
+    ...newSession,
+  });
 };

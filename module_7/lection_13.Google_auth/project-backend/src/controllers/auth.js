@@ -5,6 +5,7 @@ import {
   refreshUser,
   logoutUser,
   getGoogleLink,
+  loginOrSignupWithGoogle,
 } from '../services/auth.js';
 
 // функція для збереження куків
@@ -99,4 +100,17 @@ export const getGoogleOAuthLinkController = async (req, res) => {
   });
 };
 
-export const signUpOrLoginWithGoogleController = async (req, res) => {};
+export const signUpOrLoginWithGoogleController = async (req, res) => {
+  const { code } = req.body;
+  const session = await loginOrSignupWithGoogle(code);
+
+  setupSession(res, session);
+
+  res.json({
+    status: 200,
+    message: 'User logged in with google OAuth',
+    data: {
+      accessToken: session.accessToken,
+    },
+  });
+};

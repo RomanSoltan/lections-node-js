@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../utils/validateBody.js';
-import { authLoginSchema, authRegisterSchema } from '../validation/auth.js';
+import {
+  authLoginSchema,
+  authRegisterSchema,
+  googleOAuthValidationSchema,
+} from '../validation/auth.js';
 import {
   registerController,
   verifyController,
@@ -9,7 +13,7 @@ import {
   refreshController,
   logoutController,
   getGoogleOAuthLinkController,
-  signUpOrLoginWithGoogleController,
+  signUpOrLoginWithGoogleController as signUpOrLoginWithGoogleController,
 } from '../controllers/auth.js';
 
 const authRouter = Router();
@@ -45,6 +49,7 @@ authRouter.post(
 
 authRouter.post(
   '/login-with-google',
+  validateBody(googleOAuthValidationSchema),
   ctrlWrapper(signUpOrLoginWithGoogleController),
 );
 
