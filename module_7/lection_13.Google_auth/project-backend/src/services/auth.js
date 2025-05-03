@@ -15,6 +15,7 @@ import {
   refreshTokenLifeTime,
 } from '../constants/auth.js';
 import { TEMPLATES_DIR } from '../constants/index.js';
+import { generateGoogleOAuthLink } from '../utils/googleOAuthClient.js';
 
 // створимо нову сесію
 const createSession = () => {
@@ -177,3 +178,7 @@ export const refreshUser = async ({ refreshToken, sessionId }) => {
 export const logoutUser = (sessionId) =>
   // видалення сесії
   SessionCollection.deleteOne({ _id: sessionId });
+
+export const getGoogleLink = () => {
+  return generateGoogleOAuthLink();
+};
