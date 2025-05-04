@@ -1,18 +1,22 @@
 {
-  "name": "lection_5",
+  "name": "lection_14",
   "version": "1.0.0",
   "main": "index.js",
-  "description": "lection_5",
+  "description": "lection_14",
   "type": "module",
   "scripts": {
     "start": "node src/index",
-    "dev": "nodemon src/index"
+    "dev": "nodemon src/index",
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
   },
   "keywords": [],
   "author": "Roman Soltan <romabandit88@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@redocly/cli": "^1.34.2",
     "eslint": "^9.23.0",
     "globals": "^16.0.0",
     "nodemon": "^3.1.9",
