@@ -18,6 +18,9 @@ paths:
   /movies:
     get:
       $ref: ../swagger/paths/movies/get.yaml
+  /movies/{id}:
+    get:
+      $ref: ../swagger/paths/movies/{id}/get.yaml
 components:
   securitySchemes:
     bearerAuth:
