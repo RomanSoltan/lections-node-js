@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 // import { logger } from './middlewares/logger.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import authRouter from './routers/auth.js';
 import moviesRouter from './routers/movies.js';
 import { getEnvVar } from './utils/getEnvVar.js';
@@ -34,6 +35,9 @@ export const startServer = () => {
   // рядок читається так. Коли прийде будь-який запит, який починається з /movies,
   // шукай його обробник у обєкті moviesRouter
   app.use('/movies', moviesRouter);
+
+  // повертає красиву сторінку
+  app.use('/api-docs', swaggerDocs());
 
   // middleware, коли немає такої адреси
   app.use(notFoundHandler);
